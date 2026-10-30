@@ -24,3 +24,15 @@ class UserModel:
             cursor.close()
             return user
         return None
+
+    def register_user(self, username, password, role):
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        try:
+            cursor = self.db.cursor()
+            query = "INSERT INTO users (username, password, role) VALUES (%s, %s, %s)"
+            cursor.execute(query, (username, password_hash, role))
+            self.db.commit()
+            return True
+        except Exception as e:
+            print("Error register_user:", e)
+            return False
