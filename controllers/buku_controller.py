@@ -1,5 +1,6 @@
 import tkinter.messagebox as messagebox
 from models.buku_model import BukuModel
+from views import login_view
 from views.buku_view import BukuView
 
 class BukuController:
@@ -120,11 +121,13 @@ class BukuController:
             messagebox.showerror("Error", "Terjadi kesalahan saat memperbarui data.")
 
     def logout(self):
-        # Tutup jendela perpustakaan, lalu kembali ke LoginView
+        # Tutup jendela perpustakaan
         self.view.destroy()
-        from views.login_view import LoginView   # sesuaikan nama file/kelas login kamu
-        login = LoginView()
-        login.mainloop()
+
+        # Kembali ke login lewat AuthController, sama seperti di main.py
+        from controllers.auth_controller import AuthController
+        app = AuthController()
+        app.run()
 
     def run(self):
         self.view.mainloop()
